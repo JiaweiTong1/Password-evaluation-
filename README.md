@@ -268,7 +268,12 @@ no symbol, no uppercase letter, no lowercase letter, no digit, same as username,
 
 Run example #1
 '''
-Please enter username: hjbcqek
+Username must be 5 to 15 characters
+Please enter username: cn
+Username must be 5 to 15 characters
+Please enter username: njknicwqncuinquic
+Username must be 5 to 15 characters
+Please enter username: carnjk
 Please enter a password: carrieT!!!!
 Password should contain at least one digit.
 Please enter a password: carrieTTTTTT
@@ -281,7 +286,7 @@ weak password: **
 
 Run example #2
 '''
-Please enter username: avw
+Please enter username: avwcd
 Please enter a password: carrie
 Password length should be more than 10 characters.
 Please enter a password: jkJK5Nkniu?ni 

@@ -261,10 +261,17 @@ def main(filename):
     Ask users to enter username and password until meets all the requirements. Starting with
     checking the basic requirements. Then, checking password cannot be the same as username,
     and can not be the same as previous passwords.
+
     """
     previous_accounts_info = load_previous_accounts(filename)
+    while True:
+        username = input("Please enter username: ")
 
-    username = input("Please enter username: ")
+        if not 5 <= len(username) <= 15:
+            print("Username must be 5 to 15 characters")
+        else:
+            break
+
     while True:
         password = input("Please enter a password: ")
         different_to_username, message_username = password_not_same_username(password, username)

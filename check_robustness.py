@@ -147,11 +147,13 @@ def check_symbols(password: str) -> int:
     return count
 
 
-def password_not_same_username(password: str, username: str) -> tuple[bool, str]:
+def password_not_same_username(username: str, password: str) -> tuple[bool, str]:
     """
-    Check password not same as username, if 5 characters overlap with username, return false
+    Check password not same as username, if 5 consecutive characters overlap with username, return false
     Examples:
         >>> password_not_same_username('carrieT0112', 'carrie8eu')
+        (False, 'Password cannot be the same as username.')
+        >>> password_not_same_username('carrie', 'carrie8eu')
         (False, 'Password cannot be the same as username.')
         >>> password_not_same_username('carTrie0112', 'carrie8eu')
         (True, 'Password is not the same as username.')
@@ -161,13 +163,12 @@ def password_not_same_username(password: str, username: str) -> tuple[bool, str]
         (True, 'Password is not the same as username.')
     """
     count_overlap = 0
-    for char in range(len(password)):
-        for chars in range(char + 4, len(password) + 4):
-            substring = password[char:chars]
-            if substring in username:
-                count_overlap += 1
+    for char in range(len(password) - 4):
+        substring = password[char:char + 5]
+        if substring in username:
+            count_overlap += 1
 
-    if count_overlap >= 5:
+    if count_overlap >= 1:
         return False, "Password cannot be the same as username."
     return True, "Password is not the same as username."
 
@@ -279,7 +280,9 @@ def main(filename):
 
         if diff_previous_password(previous_accounts_info, password) != 0:
             print("password cannot be the same as previous passwords")
-        break
+
+        else:
+            break
     print(password_level(password))
 
 

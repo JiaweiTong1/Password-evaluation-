@@ -83,6 +83,7 @@ from typing import Dict
 The code starts by importing required modules, which are 're', 'argparse' and
 defining constants for different password strength levels.
 '''
+
     def check_password_minimum_requests(password) -> tuple[bool, str]:
     
        if not 10 <= len(password):
@@ -111,6 +112,7 @@ of password less than 10, user will get a feedback "Password length should be
 more than 10 characters."
 
 '''
+
     def password_not_same_username(password: str, username: str) -> tuple[bool, str]:
     
     count_overlap = 0
@@ -131,54 +133,54 @@ characters, return false and show feedback "Password cannot be the same as
 username.".
 '''
 
-def password_level(password: str):
-    """
-    if 10 <= len(password) < 12:
-        return WEAK_PASSWORD
-
-    elif 12 <= len(password) <= 14 and symbol_count >= 1 \
-            and lower_case_count >= 3 and upper_case_count >= 1:
-        return AVERAGE_PASSWORD
-
-    elif len(password) > 14 and symbol_count >= 3 \
-            and lower_case_count >= 3 and upper_case_count >= 2:
-        return STRONG_PASSWORD
-
-    else:
-        return "Password strength unknown"
+    def password_level(password: str):
+        """
+        if 10 <= len(password) < 12:
+            return WEAK_PASSWORD
+    
+        elif 12 <= len(password) <= 14 and symbol_count >= 1 \
+                and lower_case_count >= 3 and upper_case_count >= 1:
+            return AVERAGE_PASSWORD
+    
+        elif len(password) > 14 and symbol_count >= 3 \
+                and lower_case_count >= 3 and upper_case_count >= 2:
+            return STRONG_PASSWORD
+    
+        else:
+            return "Password strength unknown"
 '''
 
-
 By using if statement, I set up a condition to evaluate password level. For
-example, weak password is between 10 to 12 characters with meeting the
+example, weak password is 10 to 12 characters with meeting the
 minimum request. Evaluates the strength of a password based on its length,
 symbols, uppercase and lowercase letters, returning a strength rating, such
 as weak, average, and strong.
 
 '''
-def load_previous_accounts(filename: str) -> Dict[str, str]:
 
-    previous_accounts_dict = {}
-
-    try:
-        with open(filename, 'r') as file:
-            for line in file:
-                information = line.strip().split(':', 1)
-                if len(information) != 2:
-                    print(f'Issue with line:{line.strip()}')
-                else:
-                    user_name, password = information
-                    previous_accounts_dict[user_name] = password.lstrip(':').strip()
-
-    except FileNotFoundError:
-        print("file not found")
-        return {}
-
-    except Exception as e:
-        print(f"an error occurred: {e}")
-        return {}
-
-    return previous_accounts_dict
+    def load_previous_accounts(filename: str) -> Dict[str, str]:
+    
+        previous_accounts_dict = {}
+    
+        try:
+            with open(filename, 'r') as file:
+                for line in file:
+                    information = line.strip().split(':', 1)
+                    if len(information) != 2:
+                        print(f'Issue with line:{line.strip()}')
+                    else:
+                        user_name, password = information
+                        previous_accounts_dict[user_name] = password.lstrip(':').strip()
+    
+        except FileNotFoundError:
+            print("file not found")
+            return {}
+    
+        except Exception as e:
+            print(f"an error occurred: {e}")
+            return {}
+    
+        return previous_accounts_dict
 '''
 To load previous username and password pairs from a given file into a
 dictionary.The function returns a dictionary where keys are usernames
@@ -192,14 +194,15 @@ general exceptions (Exception) that might occur during file processing,
 printing an error message and returning an empty dictionary in case of an error.
 
 '''
-def diff_previous_password(previous_accounts_info: Dict[str, str],
-  password: str) -> int:
 
-    count = 0
-    for previous_password in previous_accounts_info.values():
-        if password == previous_password:
-            count += 1
-    return count
+    def diff_previous_password(previous_accounts_info: Dict[str, str],
+      password: str) -> int:
+    
+        count = 0
+        for previous_password in previous_accounts_info.values():
+            if password == previous_password:
+                count += 1
+        return count
 '''
 Checks how many times a given password matches any of the previous passwords
 stored in the previous_accounts_info dictionary. Initializes a counter count
@@ -209,27 +212,28 @@ a match is found (password == previous_password), increments the count by 1.
 After checking against all previous passwords, returns the final count.
 
 '''
-def main(filename):
-    previous_accounts_info = load_previous_accounts(filename)
 
-    username = input("Please enter username: ")
-    while True:
-        password = input("Please enter a password: ")
-        different_to_username, message_username = password_not_same_username(password, username)
-        meets_requirements, message_requirements = check_password_minimum_requests(password)
-
-        if not meets_requirements:
-            print(message_requirements)
-            continue
-
-        if not different_to_username:
-            print(message_username)
-            continue
-
-        if diff_previous_password(previous_accounts_info, password) != 0:
-            print("password cannot be the same as previous passwords")
-        break
-    print(password_level(password))
+    def main(filename):
+        previous_accounts_info = load_previous_accounts(filename)
+    
+        username = input("Please enter username: ")
+        while True:
+            password = input("Please enter a password: ")
+            different_to_username, message_username = password_not_same_username(password, username)
+            meets_requirements, message_requirements = check_password_minimum_requests(password)
+    
+            if not meets_requirements:
+                print(message_requirements)
+                continue
+    
+            if not different_to_username:
+                print(message_username)
+                continue
+    
+            if diff_previous_password(previous_accounts_info, password) != 0:
+                print("password cannot be the same as previous passwords")
+            break
+        print(password_level(password))
 '''
 The main program logic handles user input for username and password, validating the password against various criteria (length, not the same as username, not the same as previous passwords).
 
@@ -241,13 +245,13 @@ Enters a while loop that continues until a valid password is obtained.By using '
 ### Major Challenges
 Facing to challenges is part of my learning process. In this project, I face to
 several challenges that help to strength my coding skills. I would believe the
-hardest part is to starts everything.
+hardest part is to start everything.
 
 In the beginning of this project, I need to break down complex functions into
 smaller and more manageable functions, which can improve readability and
 maintainability. I utilize regular expressions, which is 're' module. It is a
 challenge for me because its syntax and patterns. Also, I write unit tests for
-each functions. It was hard to think about the edge tests. The last part of
+each function. It was hard to think about the edge tests. The last part of
 challenge is to call all the functions in the main(). It took me much more
 time to figure out how to call those functions and make them turn out to be
 what I expected for.
@@ -257,18 +261,53 @@ opportunities for growth and learning. I gradually improve my codebase step by s
 
 
 ## Example Runs
-carrietong@Jiaweidebijibendiannao python_final_project % python3 check_robustness.py -f previous_passwords.dat
+By copy and paste the command line "python3 check_robustness.py -f previous_passwords.dat" in 
+the terminal, there are three run examples as below. Each example end with three password levels, which are 
+weak password,average password, strong password. Examples also show the false conditions for less length, 
+no symbol, no uppercase letter, no lowercase letter, no digit, same as username, same as previous passwords.
 
-Please enter username: cds
-Please enter a password: T!2uuuuuuu
+Run example #1
+'''
+Please enter username: hjbcqek
+Please enter a password: carrieT!!!!
+Password should contain at least one digit.
+Please enter a password: carrieTTTTTT
+Password should contain at least one digit.
+Please enter a password: carrie!!!!!000
+Password should contain at least one uppercase letter.
+Please enter a password: carrieTT!21  
 weak password: **
+'''
 
-Explain how you documented running the project, and what we need to look for in
-your repository (text output from the project, small videos, links to videos on
-  youtube of you running it, etc)
+Run example #2
+'''
+Please enter username: avw
+Please enter a password: carrie
+Password length should be more than 10 characters.
+Please enter a password: jkJK5Nkniu?ni 
+password cannot be the same as previous passwords
+Please enter a password: carrieT
+Password length should be more than 10 characters.
+Please enter a password: carrieT000
+Password should contain at least one symbol (?!/|}@#).
+Please enter a password: carrie000000
+Password should contain at least one uppercase letter.
+Please enter a password: carrieT0112!
+average password: ***
+'''
+
+Run example #3
+'''
+Please enter username: carrie
+Please enter a password: carrieTTT01!!!v
+Password cannot be the same as username.
+Please enter a password: njkTTT01!!!/VVV        
+strong password: *****
+'''
+
 
 ## Testing
-In each functions, I test the code with doctest. In the terminal, I use
+In each function, I test the code with doctest. In the terminal, I use
 command line python3 -m doctest -v check_robustness.py to make sure my code
 is correct.
 
@@ -313,5 +352,5 @@ It is used for loading the previous username and passwords from given file
 and check new password with previous passwords.
 
 The above key takeaways is what I learned in this course. I would like to
-learn more about the knowledges to add the feature of saving password in
+learn more about the knowledge to add the feature of saving password in
 one month.

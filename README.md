@@ -83,25 +83,25 @@ from typing import Dict
 The code starts by importing required modules, which are 're', 'argparse' and
 defining constants for different password strength levels.
 '''
-def check_password_minimum_requests(password) -> tuple[bool, str]:
-
-   if not 10 <= len(password):
-       return False, "Password length should be more than 10 characters."
-
-   if not re.search(r"[A-Z]", password):
-       return False, "Password should contain at least one uppercase letter."
-
-   if not re.search(r"[a-z]", password):
-       return False, "Password should contain at least one lowercase letter."
-
-   if not re.search(r"\d", password):
-       return False, "Password should contain at least one digit."
-
-   if not re.search(r"[?!/|}@#]", password):
-       return False, "Password should contain at least one symbol (?!/|}@#)."
-
-   else:
-       return True, "Password meets the minimum requirements."
+    def check_password_minimum_requests(password) -> tuple[bool, str]:
+    
+       if not 10 <= len(password):
+           return False, "Password length should be more than 10 characters."
+    
+       if not re.search(r"[A-Z]", password):
+           return False, "Password should contain at least one uppercase letter."
+    
+       if not re.search(r"[a-z]", password):
+           return False, "Password should contain at least one lowercase letter."
+    
+       if not re.search(r"\d", password):
+           return False, "Password should contain at least one digit."
+    
+       if not re.search(r"[?!/|}@#]", password):
+           return False, "Password should contain at least one symbol (?!/|}@#)."
+    
+       else:
+           return True, "Password meets the minimum requirements."
 '''
 
 Defines a function to verify if a password meets basic requirements such as
@@ -111,18 +111,18 @@ of password less than 10, user will get a feedback "Password length should be
 more than 10 characters."
 
 '''
-def password_not_same_username(password: str, username: str) -> tuple[bool, str]:
-
-count_overlap = 0
-   for char in range(len(password)):
-       for chars in range(char + 4, len(password) + 4):
-           substring = password[char:chars]
-           if substring in username:
-               count_overlap += 1
-
-    if count_overlap >= 5:
-        return False, "Password cannot be the same as username."
-    return True, "Password is not the same as username."
+    def password_not_same_username(password: str, username: str) -> tuple[bool, str]:
+    
+    count_overlap = 0
+       for char in range(len(password)):
+           for chars in range(char + 4, len(password) + 4):
+               substring = password[char:chars]
+               if substring in username:
+                   count_overlap += 1
+    
+        if count_overlap >= 5:
+            return False, "Password cannot be the same as username."
+        return True, "Password is not the same as username."
 '''
 Check password not same as username, if 5 characters overlap with username,
 return false. I use for loop to iterate over password and user name. I use
